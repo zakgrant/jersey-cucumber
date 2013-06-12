@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/person")
 public class PersonResource {
 
+    //TODO: Inject these with Guice ?
     private static Person[] persons = {
             createPerson(1, "suzuki", "Tokyo"),
             createPerson(2, "satou", "Osaka"),

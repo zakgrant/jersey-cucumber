@@ -1,4 +1,4 @@
-package com.zak.rest;
+package com.zak.rest.service;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;

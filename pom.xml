@@ -18,11 +18,20 @@
     </repositories>
 
     <properties>
+        <!-- DEPENDENCIES -->
         <jersey.version>1.8</jersey.version>
-        <java.version>1.7</java.version>
         <cukes.version>1.1.2</cukes.version>
         <junit.version>4.11</junit.version>
         <slf4j.version>0.8.3</slf4j.version>
+        <rest-assured.version>1.8.1</rest-assured.version>
+        <!-- PLUGINS -->
+        <maven-war-plugin>2.3</maven-war-plugin>
+        <tomcat7-maven-plugin>2.0-beta-1</tomcat7-maven-plugin>
+        <maven-failsafe-plugin>2.12</maven-failsafe-plugin>
+        <maven-compiler-plugin>3.1</maven-compiler-plugin>
+        <build-helper-maven-plugin>1.8</build-helper-maven-plugin>
+        <!-- JDK -->
+        <java.version>1.7</java.version>
     </properties>
 
     <dependencies>
@@ -32,6 +41,7 @@
             <version>${cukes.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
@@ -54,6 +64,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
             <version>${jersey.version}</version>
@@ -69,10 +85,44 @@
     <build>
         <finalName>helloWorldWebApp</finalName>
         <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
+                <!--<version>${build-helper-maven-plugin}</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>add-source</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>add-test-source</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<sources>-->
+                                <!--<source>src/it/java</source>-->
+                            <!--</sources>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>add-resource</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>add-test-resource</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<resources>-->
+                                <!--<resource>-->
+                                    <!--<directory>src/it/resources</directory>-->
+                                <!--</resource>-->
+                            <!--</resources>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>${maven-war-plugin}</version>
                 <configuration>
                     <warName>helloWorldWebApp</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -81,7 +131,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.0-beta-1</version>
+                <version>${tomcat7-maven-plugin}</version>
                 <configuration>
                    <!-- TODO this needs to be configurable -->
                     <url>http://127.0.0.1:8080/manager/text</url>
@@ -91,10 +141,25 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

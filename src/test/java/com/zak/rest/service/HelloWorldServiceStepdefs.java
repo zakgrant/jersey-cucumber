@@ -1,50 +1,43 @@
 package com.zak.rest.service;
 
-import cucumber.api.PendingException;
+import com.zak.rest.service.support.HelloWorldServiceSupport;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class HelloWorldServiceStepdefs {
+
+    private HelloWorldServiceSupport helloWorldServiceSupport = new HelloWorldServiceSupport();
+    private String actual;
+
     @Given("^I query person$")
     public void I_query_person() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
     }
 
     @When("^I make the rest call$")
     public void I_make_the_rest_call() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+        actual = helloWorldServiceSupport.getPeople();
     }
 
-    @Then("^response should contain:$")
-    public void response_should_contain(String arg1) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    @Then("^response should contain a collection of people:$")
+    public void response_should_contain_a_collection_of_people(String expected) throws Throwable {
+        assertActualAgainstExpectedResponse(expected);
     }
 
-    @Given("^I query person by \"([^\"]*)\"$")
-    public void I_query_person_by(String arg1) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    @When("^I make the rest call passing the \"(\\d+)\"$")
+    public void I_make_the_rest_call_passing_the_id(int id) throws Throwable {
+        actual = helloWorldServiceSupport.getPerson(id);
     }
 
-    @Then("^response should contain \"([^\"]*)\"address\"([^\"]*)\"Tokyo\"([^\"]*)\"name\"([^\"]*)\"suzuki\"([^\"]*)\"id\"([^\"]*)\"$")
-    public void response_should_contain_address_Tokyo_name_suzuki_id(String arg1, String arg2, String arg3, String arg4, String arg5, String arg6) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    @Then("^response should contain a single person \"(.*)\"$")
+    public void response_should_contain_a_single_person(String expected) throws Throwable {
+        assertActualAgainstExpectedResponse(expected);
     }
 
-    @Then("^response should contain \"([^\"]*)\"address\"([^\"]*)\"Osaka\"([^\"]*)\"name\"([^\"]*)\"satou\"([^\"]*)\"id\"([^\"]*)\"$")
-    public void response_should_contain_address_Osaka_name_satou_id(String arg1, String arg2, String arg3, String arg4, String arg5, String arg6) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
-
-    @Then("^response should contain \"([^\"]*)\"address\"([^\"]*)\"Naogya\"([^\"]*)\"name\"([^\"]*)\"tanaka\"([^\"]*)\"id\"([^\"]*)\"$")
-    public void response_should_contain_address_Naogya_name_tanaka_id(String arg1, String arg2, String arg3, String arg4, String arg5, String arg6) throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+    private void assertActualAgainstExpectedResponse(String expected) {
+        assertThat(actual.contains(expected), is(true));
     }
 }

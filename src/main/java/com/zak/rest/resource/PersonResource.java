@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/person")
 public class PersonResource {
 
-    //TODO: Inject these with Guice ?
+    //TODO: add restful create call
     private static Person[] persons = {
             createPerson(1, "suzuki", "Tokyo"),
             createPerson(2, "satou", "Osaka"),
@@ -35,10 +35,8 @@ public class PersonResource {
     }
 
     private static Person createPerson(Integer id, String name, String address) {
-        Person person = new Person();
-        person.setId(id);
-        person.setName(name);
-        person.setAddress(address);
-        return person;
+        return new Person().setId(id)
+                           .setName(name)
+                           .setAddress(address);
     }
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
 
 import com.zak.rest.vo.Person;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -29,7 +28,7 @@ public class HelloWorldServiceStepdefs {
     public HelloWorldServiceStepdefs() {
         RestAssured.baseURI  = "http://localhost";
         RestAssured.port     = 8080;
-        RestAssured.basePath = "/rest";
+        RestAssured.basePath = "/api";
     }
 
     @Given("^I query person$")
@@ -38,7 +37,7 @@ public class HelloWorldServiceStepdefs {
 
     @When("^I make the rest call$")
     public void I_make_the_rest_call() throws Throwable {
-        String result = expect().statusCode(200).when().get("person/").asString();
+        String result = expect().statusCode(200).when().get("persons/").asString();
         actualPersons = new ArrayList<>(Arrays.asList(from(result).getObject("person", Person[].class)));
     }
 
@@ -52,7 +51,7 @@ public class HelloWorldServiceStepdefs {
 
     @When("^I make the rest call passing the \"(\\d+)\"$")
     public void I_make_the_rest_call_passing_the_id(int id) throws Throwable {
-        actualPerson = expect().statusCode(200).when().get("/person/" + id).as(Person.class);
+        actualPerson = expect().statusCode(200).when().get("/persons/" + id).as(Person.class);
     }
 
     @Then("^response should contain a single person \"(.*)\"$")
